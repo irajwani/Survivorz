@@ -6,7 +6,10 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     Rigidbody2D rb2d;
-    Vector3 movementVector;
+    [HideInInspector] public Vector3 movementVector;
+
+    [HideInInspector] public float lastHorizontalVector;
+    [HideInInspector] public float lastVerticalVector;
     [SerializeField] float speed = 3f;
     Animate animate;
 
@@ -26,12 +29,23 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
         movementVector.x = Input.GetAxisRaw("Horizontal");
-        movementVector.y = Input.GetAxisRaw("Vertical");   
+        movementVector.y = Input.GetAxisRaw("Vertical");
+
+        UpdateLastMovementVector();
 
         animate.horizontal = movementVector.x;
 
         movementVector *= speed;
 
         rb2d.velocity = movementVector;
+    }
+
+    private void UpdateLastMovementVector() {
+        if (movementVector.x != 0) {
+            lastHorizontalVector = movementVector.x;
+        }
+        if (movementVector.y != 0) {
+            lastVerticalVector = movementVector.y;
+        }
     }
 }
