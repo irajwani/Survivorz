@@ -45,9 +45,9 @@ public class Whip : MonoBehaviour
 
     private void ApplyDamage(Collider2D[] colliders) {
         for (int i = 0; i < colliders.Length; i++) {
-            Enemy e = colliders[i].GetComponent<Enemy>();
-            if (e != null) {
-                e.TakeDamage(damage);
+            IDestructible destructibleObject = colliders[i].GetComponent<IDestructible>();
+            if (destructibleObject != null) {
+                destructibleObject.TakeDamage(damage);
             }
         }
     }
