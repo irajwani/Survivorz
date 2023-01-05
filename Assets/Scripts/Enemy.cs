@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour, IDestructible
     [SerializeField] float speed;
     [SerializeField] int hp = 20;
     [SerializeField] int damage = 10;
+    [SerializeField] int experienceReward = 300;
 
     Rigidbody2D rb2d;
 
@@ -46,6 +47,7 @@ public class Enemy : MonoBehaviour, IDestructible
     public void TakeDamage(int damage) {
         hp -= damage;
         if (hp < 1) {
+            targetGameObject.GetComponent<Level>().AddExperience(experienceReward);
             Destroy(gameObject);
         }
     }
