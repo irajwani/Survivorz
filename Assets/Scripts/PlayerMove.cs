@@ -6,8 +6,7 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     Rigidbody2D rb2d;
-    [HideInInspector] public Vector3 movementVector;
-
+    [HideInInspector] public Vector2 movementVector;
     [HideInInspector] public float lastHorizontalVector;
     [HideInInspector] public float lastVerticalVector;
     [SerializeField] float speed = 3f;
@@ -16,28 +15,28 @@ public class PlayerMove : MonoBehaviour
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        movementVector = new Vector3();
+        movementVector = new Vector2();
         animate = GetComponent<Animate>();
     }
-    // Start is called before the first frame update
-    // void Start()
-    // {
-    //     rb2d.velocity = { x: 4, y: -8};
-    // }
 
     // Update is called once per frame
     void Update()
     {
         movementVector.x = Input.GetAxisRaw("Horizontal");
         movementVector.y = Input.GetAxisRaw("Vertical");
+    }
 
+    void FixedUpdate() {
         UpdateLastMovementVector();
+        HandleMove();
+        Debug.Log("Player Pos: " + movementVector);
+    }
 
+    private void HandleMove() {
         animate.horizontal = movementVector.x;
 
         movementVector *= speed;
-
-        rb2d.velocity = movementVector;
+        rb2d.MovePosition(rb2d.position + movementVector * Time.fixedDeltaTime);
     }
 
     private void UpdateLastMovementVector() {
