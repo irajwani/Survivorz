@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Gun : MonoBehaviour
 {
@@ -10,6 +7,7 @@ public class Gun : MonoBehaviour
     public float offset = 0.1f;
     public Transform shootingPoint;
     public GameObject bulletPrefab;
+    public float bulletForce = 20f;
 
     private SpriteRenderer spriteRenderer;
     
@@ -20,12 +18,17 @@ public class Gun : MonoBehaviour
     {
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
-        if(Keyboard.current.spaceKey.wasPressedThisFrame) {
-            Instantiate(bulletPrefab, shootingPoint.position, transform.rotation);
+        if(Input.GetMouseButtonDown(0)) {
+            Shoot();
         }
 
         HandleRotate();
-        Debug.Log("Gun Pos: " + transform.position + "Sp position: " + shootingPoint.position);
+    }
+
+    void Shoot() {
+        Instantiate(bulletPrefab, shootingPoint.position, shootingPoint.rotation);
+        // Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        // rb.AddForce(shootingPoint.position * bulletForce, ForceMode2D.Impulse);
     }
 
     // void FixedUpdate() {

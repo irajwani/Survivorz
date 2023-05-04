@@ -12,8 +12,11 @@ public class Enemy : MonoBehaviour, IDestructible
 
     Rigidbody2D rb2d;
 
+    // ---------------------------------------
+    // Reference to Player Gameobject overall, and Character Script respectively
     GameObject targetGameObject;
     Character targetCharacter;
+    // ---------------------------------------
 
     private void Awake() {
         rb2d = GetComponent<Rigidbody2D>();

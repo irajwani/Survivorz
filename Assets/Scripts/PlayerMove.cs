@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMove : MonoBehaviour
 {
-    Rigidbody2D rb2d;
+    public Rigidbody2D rb;
     [HideInInspector] public Vector2 movementVector;
     [HideInInspector] public float lastHorizontalVector;
     [HideInInspector] public float lastVerticalVector;
@@ -14,7 +14,6 @@ public class PlayerMove : MonoBehaviour
 
     private void Awake()
     {
-        rb2d = GetComponent<Rigidbody2D>();
         movementVector = new Vector2();
         animate = GetComponent<Animate>();
     }
@@ -29,14 +28,14 @@ public class PlayerMove : MonoBehaviour
     void FixedUpdate() {
         UpdateLastMovementVector();
         HandleMove();
-        Debug.Log("Player Pos: " + movementVector);
+        Debug.Log("Player moving in direction: " + movementVector);
     }
 
     private void HandleMove() {
         animate.horizontal = movementVector.x;
 
         movementVector *= speed;
-        rb2d.MovePosition(rb2d.position + movementVector * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movementVector * Time.fixedDeltaTime);
     }
 
     private void UpdateLastMovementVector() {
